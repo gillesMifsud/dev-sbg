@@ -1,0 +1,74 @@
+<h1>Contact</h1>
+
+<form
+  [formGroup]="contactForm"
+  (ngSubmit)="onSubmit(contactForm.value)">
+
+    <div class="form-group">
+        <label for="name">
+          <span [class.error-star]="!name.valid && name.touched">* </span>Nom</label>
+        <input
+          id="name" type="text" class="form-control" required placeholder="nom"
+          [formControl]="name">
+          <!-- Erreurs -->
+          <div>
+            <p *ngIf="name.hasError('required') && name.touched"
+              class="error-box">
+              * Nom requis!
+            </p>
+            <p *ngIf="name.hasError('minlength') && name.touched"
+              class="error-box">
+              * Le nom doit comporter plus de 2 caractères!
+            </p>
+          </div>
+        <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+            Nom requis!
+        </div> -->
+    </div>
+
+    <div class="form-group">
+        <label for="email">
+          <span [class.error-star]="!email.valid && email.touched">* </span>Email</label>
+        <input
+          id="email" type="email" required placeholder="email"
+          class="form-control"
+          [formControl]="email">
+          <!-- Erreurs -->
+          <div>
+            <p *ngIf="email.hasError('required') && email.touched"
+              class="error-box">
+              * Email requis!
+            </p>
+          </div>
+        <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+            Nom requis!
+        </div> -->
+    </div>
+
+    <div class="form-group">
+        <label for="sujet">Sujet de la demande</label>
+        <select id="sujet" class="form-control"
+          required [formControl]="sujet">
+            <option *ngFor="let p of sujets" [value]="p">{{p}}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="comment">Votre demande</label>
+        <textarea
+        class="form-control"
+                id="comment"
+                cols="30"
+                rows="10"
+                [formControl]="comment"
+                required>
+        </textarea>
+        <div
+                *ngIf="comment.touched && !comment.valid"
+                class="alert alert-danger">
+            Demande requise.
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="!contactForm.valid">Submit</button>
+</form>
